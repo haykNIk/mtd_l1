@@ -1,3 +1,6 @@
+/*
+ * @Author: hayknik
+ */
 #include <stdio.h>
 
 int main()
