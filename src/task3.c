@@ -12,9 +12,9 @@ int main()
     unsigned int* pa = &a;
     printf("the pointer value is %p\n", pa);
 
-    int b;
+    int b_value;
     printf("input a number:\n");
-    scanf("%d", &b);
-    printf("the value of `b` is %d\n", b);
+    scanf("%d", &b_value);
+    printf("the value of `b_value` is %d\n", b_value);
     return 0;
 }
