@@ -1,3 +1,6 @@
+/*
+ * @Author: hayknik
+ */
 #include <limits.h> // подключение библиотеки, в которой определён макрос UCHAR_MAX
 #include <stddef.h> // здесь определён тип size_t
 #include <stdlib.h> // подключение stdlib.h для использования функции exit
