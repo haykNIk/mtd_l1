@@ -1,20 +1,23 @@
+/*
+ * @Author: hayknik
+ */
 #include <stdio.h>
 
 int main()
 {
-    int a;
+    unsigned int a;
 
     printf("input non-negative number:\n");
-    scanf("%d", &a);
+    scanf("%u", &a);
 
-    printf("the value of `a` is %d\n", a);
+    printf("the value of `a` is %u\n", a);
 
-    int* pa = &a;
+    unsigned int* pa = &a;
     printf("the pointer value is %p\n", pa);
 
-    int b;
+    int b_value;
     printf("input a number:\n");
-    scanf("%d", &b);
-    printf("the value of `b` is %d\n", b);
+    scanf("%d", &b_value);
+    printf("the value of `b_value` is %d\n", b_value);
     return 0;
 }
