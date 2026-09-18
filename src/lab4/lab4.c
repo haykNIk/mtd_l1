@@ -104,7 +104,6 @@ void test_swap_functions() {
     // Тест 7: Предельные значения
     {
         int a = INT_MAX, b = INT_MIN;
-        int old_a = a, old_b = b;
         swap(&a, &b);
         if (a != INT_MIN || b != INT_MAX) {
             printf("Ошибка: предельные значения\n");

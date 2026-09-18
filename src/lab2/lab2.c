@@ -1,6 +1,10 @@
 /*
  * @Author: hayknik
  */
+#include <stdio.h>  // printf, scanf
+#include <stddef.h> // тип ptrdiff_t
+#include <stdlib.h> // malloc, free
+
 int main() {
   // Задание 5. Арифметика указателей. Операция разыменования указателя.
   // Выполняя задание, следите за изменением значений
@@ -24,9 +28,13 @@ int main() {
     pd2 += 2;
 
     // Объясните результат выполнения операции вычитания двух указателей
+    // Разность указателей — это не разность адресов в байтах,
+    // а количество элементов между ними (тип ptrdiff_t). Здесь это 1.
     pd1 = &dAr[0];
     pd2 = &dAr[1];
-    int nNumber = pd2 - pd1;
+    ptrdiff_t nNumber = pd2 - pd1;
+    printf("pd2 - pd1 = %ld (разница выражена в элементах, а не в байтах)\n",
+           (long)nNumber);
   }
 
   // Задание 6. Void-указатель.
@@ -50,11 +58,28 @@ int main() {
   // Задание 7. Модификатор const. В каждом из заданий
   // объявите указатель требуемого вида
   {
+    int nValueA = 10;
+    int nValueB = 20;
+
     // 7a. Указатель является константой.
+    // Сам указатель переприсвоить нельзя, а значение по адресу — можно.
+    int * const pConstPtr = &nValueA;
+    *pConstPtr = 15;         // допустимо: меняем значение, а не указатель
+    // pConstPtr = &nValueB; // ошибка компиляции: указатель — константа
 
     // 7б. Указываемое значение является константой.
+    // Значение по указателю менять нельзя, а сам указатель — можно.
+    const int *pPtrToConst = &nValueA;
+    pPtrToConst = &nValueB;  // допустимо: меняем указатель, а не значение
+    // *pPtrToConst = 30;    // ошибка компиляции: значение — константа
 
     // 7в. И указатель, и указываемое значение являются константами.
+    const int * const pConstPtrToConst = &nValueA;
+    // pConstPtrToConst = &nValueB; // ошибка компиляции: указатель — константа
+    // *pConstPtrToConst = 40;      // ошибка компиляции: значение — константа
+
+    printf("7a: nValueA = %d; 7b: *pPtrToConst = %d; 7v: *pConstPtrToConst = %d\n",
+           nValueA, *pPtrToConst, *pConstPtrToConst);
   }
 
   // Задание 8. Динамическая память
@@ -66,4 +91,40 @@ int main() {
   // 5
   // 1 4 3
   // Вывод: 3 4 1
+  {
+    int nCount = 0;
+    printf("Введите количество чисел n: ");
+    if (scanf("%d", &nCount) != 1 || nCount <= 0) {
+      printf("Некорректный ввод\n");
+      return 1;
+    }
+
+    // Память выделяется в процессе выполнения программы
+    int *pNumbers = (int *)malloc((size_t)nCount * sizeof(int));
+    if (pNumbers == NULL) {
+      printf("Ошибка выделения памяти\n");
+      return 1;
+    }
+
+    printf("Введите %d чисел: ", nCount);
+    for (int i = 0; i < nCount; i++) {
+      if (scanf("%d", &pNumbers[i]) != 1) {
+        printf("Некорректный ввод\n");
+        free(pNumbers);
+        return 1;
+      }
+    }
+
+    // Вывод в обратном порядке
+    printf("Вывод: ");
+    for (int i = nCount - 1; i >= 0; i--) {
+      printf("%d", pNumbers[i]);
+      if (i > 0) {
+        printf(" ");
+      }
+    }
+    printf("\n");
+
+    free(pNumbers); // освобождаем выделенную память
+  }
 }
